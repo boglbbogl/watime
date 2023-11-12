@@ -1,28 +1,26 @@
+import 'package:watime/model/continent_type.dart';
+
 class LocationModel {
   final String code;
-  final int no;
-  final int continent;
+  final ContinentType continent;
   final String location;
-  final Duration? timezone;
+  final Duration timezone;
 
   const LocationModel({
     required this.code,
-    required this.no,
     required this.continent,
     required this.location,
-    this.timezone,
+    required this.timezone,
   });
 
   LocationModel copyWith({
     final String? code,
-    final int? no,
-    final int? continent,
+    final ContinentType? continent,
     final String? location,
     final Duration? timezone,
   }) {
     return LocationModel(
       code: code ?? this.code,
-      no: no ?? this.no,
       continent: continent ?? this.continent,
       location: location ?? this.location,
       timezone: timezone ?? this.timezone,
@@ -31,8 +29,12 @@ class LocationModel {
 
   factory LocationModel.init() => const LocationModel(
         code: "",
-        no: 0,
-        continent: 0,
+        continent: ContinentType.empty,
         location: "",
+        timezone: Duration.zero,
       );
+
+  @override
+  String toString() =>
+      "LocationModel(code : $code, contient : $continent, location : $location, timezone : $timezone)";
 }
