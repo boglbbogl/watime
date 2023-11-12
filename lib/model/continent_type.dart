@@ -3,10 +3,12 @@ enum ContinentType {
   atlantic(1, "Atlantic", "Atlantic"),
   indian(2, "Indian", "Indian"),
   america(3, "America", "America"),
-  europe(4, "Europe", "Europe"),
-  asia(5, "Asia", "Asia"),
-  africa(6, "Africa", "Africa"),
-  australia(7, "Australia", "Australia");
+  us(4, "US", "US"),
+  europe(5, "Europe", "Europe"),
+  asia(6, "Asia", "Asia"),
+  africa(7, "Africa", "Africa"),
+  australia(8, "Australia", "Australia"),
+  empty(99, "", "");
 
   final int no;
   final String code;
