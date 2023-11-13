@@ -1,12 +1,18 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:watime/pages/locations_page.dart';
+import 'package:watime/ui/locations/locations_page.dart';
+import 'package:watime/services/theme_service.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final Brightness brightness;
+  const MainPage({
+    super.key,
+    required this.brightness,
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -18,6 +24,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    ThemeService.init(widget.brightness);
   }
 
   @override
@@ -36,8 +43,7 @@ class _MainPageState extends State<MainPage> {
           GestureDetector(
             onTap: () {
               HapticFeedback.mediumImpact();
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const LocationsPage()));
+              ThemeService.onChanged();
             },
             child: Container(
               width: 48,
@@ -52,7 +58,7 @@ class _MainPageState extends State<MainPage> {
             onTap: () {
               HapticFeedback.mediumImpact();
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const LocationsPage()));
+                  CupertinoPageRoute(builder: (_) => const LocationsPage()));
             },
             child: Container(
               width: 48,
