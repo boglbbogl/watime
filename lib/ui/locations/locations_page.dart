@@ -4,6 +4,7 @@ import 'package:watime/model/location_model.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:watime/services/location_service.dart';
+import 'package:watime/services/main_service.dart';
 import 'package:watime/ui/locations/location_appbar_widget.dart';
 import 'package:watime/ui/locations/location_items_widget.dart';
 
@@ -15,6 +16,7 @@ class LocationsPage extends StatefulWidget {
 }
 
 class _LocationsPageState extends State<LocationsPage> {
+  final GlobalKey initKey = GlobalKey();
   final TextEditingController controller = TextEditingController();
   List<LocationModel> locations = [];
 
@@ -54,7 +56,7 @@ class _LocationsPageState extends State<LocationsPage> {
             : data;
         LocationModel current = LocationModel(
           code: data,
-          continent: getContinent(data.split("/")[0]),
+          continent: MainService.getContinent(data.split("/")[0]),
           location: locationName,
           timezone: timezone.timeZoneOffset,
         );
@@ -68,22 +70,6 @@ class _LocationsPageState extends State<LocationsPage> {
     after = after..sort((a, b) => a.timezone.compareTo(b.timezone));
     before = before..sort((a, b) => b.timezone.compareTo(a.timezone));
     locations = [...after, ...before];
-  }
-
-  ContinentType getContinent(String code) {
-    return switch (code) {
-      "Pacific" => ContinentType.pacific,
-      "Atlantic" => ContinentType.atlantic,
-      "Indian" => ContinentType.indian,
-      "Antarctica" => ContinentType.antarctica,
-      "America" => ContinentType.america,
-      "US" => ContinentType.us,
-      "Europe" => ContinentType.europe,
-      "Asia" => ContinentType.asia,
-      "Africa" => ContinentType.africa,
-      "Australia" => ContinentType.australia,
-      _ => ContinentType.empty,
-    };
   }
 
   @override
@@ -106,13 +92,19 @@ class _LocationsPageState extends State<LocationsPage> {
         body: CustomScrollView(
           slivers: [
             LocationAppbarWidget(
+              initKey: initKey,
               controller: controller,
               locations: locations,
               continents: continents,
               onClear: () => clear(),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 24)),
+            SliverToBoxAdapter(
+                child: SizedBox(
+              height: 24,
+              key: initKey,
+            )),
             LocationItemsWidget(locations: locations, controller: controller),
+            const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),
       ),

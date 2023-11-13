@@ -9,6 +9,7 @@ class LocationAppbarWidget extends StatelessWidget {
   final List<LocationModel> locations;
   final List<ContinentType> continents;
   final TextEditingController controller;
+  final GlobalKey initKey;
   final Function() onClear;
   const LocationAppbarWidget({
     super.key,
@@ -16,6 +17,7 @@ class LocationAppbarWidget extends StatelessWidget {
     required this.continents,
     required this.onClear,
     required this.controller,
+    required this.initKey,
   });
 
   @override
@@ -224,6 +226,10 @@ class LocationAppbarWidget extends StatelessWidget {
                           Navigator.of(context).pop();
                           LocationService.onContinentChanged(
                               continents[index], locations);
+                          if (initKey.currentContext != null) {
+                            Scrollable.ensureVisible(initKey.currentContext!,
+                                duration: const Duration(milliseconds: 350));
+                          }
                         },
                         child: Container(
                           height: 40,

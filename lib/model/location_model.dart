@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:watime/model/continent_type.dart';
 
-class LocationModel {
+class LocationModel extends Equatable {
   final String code;
   final ContinentType continent;
   final String location;
@@ -37,4 +38,12 @@ class LocationModel {
   @override
   String toString() =>
       "LocationModel(code : $code, contient : $continent, location : $location, timezone : $timezone)";
+
+  @override
+  List<Object?> get props => [
+        code,
+        continent,
+        location,
+        timezone,
+      ];
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:watime/main_page.dart';
+import 'package:watime/ui/main/main_page.dart';
 import 'package:watime/model/theme_model.dart';
 import 'package:watime/services/theme_service.dart';
 
