@@ -7,6 +7,19 @@ class InternalRepository {
   factory InternalRepository() => instance;
   InternalRepository._internal();
 
+  Future<List<String>> getLocations() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String> codes = preferences.getStringList(InternalKey.locations) ?? [];
+    return codes;
+  }
+
+  Future<void> setLocation(String code) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String> codes = preferences.getStringList(InternalKey.locations) ?? [];
+    codes = List.from(codes)..insert(0, code);
+    await preferences.setStringList(InternalKey.locations, codes);
+  }
+
   Future<ThemeMode?> getThemeMode() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     int type = preferences.getInt(InternalKey.themeMode) ?? 0;

@@ -11,6 +11,7 @@ class ThemeModel {
       onPrimary: const Color.fromRGBO(255, 255, 255, 1),
       error: Colors.red,
       secondary: const Color.fromRGBO(195, 195, 195, 1),
+      onSecondary: const Color.fromRGBO(215, 215, 215, 1),
     ),
     scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
     appBarTheme: AppBarTheme(
@@ -34,6 +35,7 @@ class ThemeModel {
       onPrimary: const Color.fromRGBO(26, 26, 26, 1),
       error: Colors.red,
       secondary: const Color.fromRGBO(95, 95, 95, 1),
+      onSecondary: const Color.fromRGBO(66, 66, 66, 1),
     ),
     scaffoldBackgroundColor: const Color.fromRGBO(26, 26, 26, 1),
     appBarTheme: AppBarTheme(

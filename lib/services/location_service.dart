@@ -12,13 +12,15 @@ class LocationService {
   static ValueNotifier<SearchModel> search = ValueNotifier(SearchModel.empty());
   static ValueNotifier<ContinentType> continentType =
       ValueNotifier(ContinentType.all);
+  final GlobalKey initKey = GlobalKey();
 
-  static onCanceled() {
+  static void onCanceled() {
     isSuffix.value = false;
     search.value = SearchModel.empty();
   }
 
-  static onContinentChanged(ContinentType type, List<LocationModel> locations) {
+  static void onContinentChanged(
+      ContinentType type, List<LocationModel> locations) {
     List<LocationModel> continentLocations = type.no == 0
         ? locations
         : locations.where((e) => e.continent == type).toList();
@@ -29,7 +31,7 @@ class LocationService {
     continentType.value = type;
   }
 
-  static onChanged(String value, List<LocationModel> locations) {
+  static void onChanged(String value, List<LocationModel> locations) {
     if (value.isEmpty) {
       isSuffix.value = false;
       search.value = SearchModel.empty();

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:watime/model/location_model.dart';
+import 'package:watime/model/main_model.dart';
 import 'package:watime/model/search_model.dart';
 import 'package:watime/model/theme_model.dart';
 import 'package:watime/services/location_service.dart';
+import 'package:watime/services/main_service.dart';
 
 class LocationItemsWidget extends StatelessWidget {
   final List<LocationModel> locations;
@@ -27,85 +30,125 @@ class LocationItemsWidget extends StatelessWidget {
                   ? locations.length
                   : search.locations.length,
               itemBuilder: (context, index) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 60,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  margin: const EdgeInsets.only(bottom: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            ((search.locations.isEmpty &&
-                                        controller.text.isEmpty)
-                                    ? locations[index]
-                                    : search.locations[index])
-                                .continent
-                                .name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  fontSize: 12,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
+                return ValueListenableBuilder<MainModel>(
+                    valueListenable: MainService.main,
+                    builder: (
+                      BuildContext context,
+                      MainModel main,
+                      Widget? child,
+                    ) {
+                      bool isAdd = main.locations.contains(
+                          ((search.locations.isEmpty && controller.text.isEmpty)
+                              ? locations[index]
+                              : search.locations[index]));
+                      return GestureDetector(
+                        onTap: () {
+                          HapticFeedback.mediumImpact();
+                          MainService.addLocation(((search.locations.isEmpty &&
+                                  controller.text.isEmpty)
+                              ? locations[index]
+                              : search.locations[index]));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 60,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ...((search.locations.isEmpty &&
-                                              controller.text.isEmpty)
-                                          ? locations[index]
-                                          : search.locations[index])
-                                      .location
-                                      .split("")
-                                      .map((e) => TextSpan(
-                                          text: e,
-                                          style: TextStyle(
-                                            color: search.word
-                                                    .contains(e.toLowerCase())
-                                                ? ThemeModel.firstColor
-                                                : null,
-                                          )))
-                                ]),
-                          ),
-                        ],
-                      ),
-                      Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: Center(
-                            child: Text(
-                              "+",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontSize: 32,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                  Text(
+                                    ((search.locations.isEmpty &&
+                                                controller.text.isEmpty)
+                                            ? locations[index]
+                                            : search.locations[index])
+                                        .continent
+                                        .name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontSize: 12,
+                                          color: isAdd
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                        ),
                                   ),
-                            ),
-                          )),
-                    ],
-                  ),
-                );
+                                  RichText(
+                                    text: TextSpan(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              color: isAdd
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                            ),
+                                        children: [
+                                          ...((search.locations.isEmpty &&
+                                                      controller.text.isEmpty)
+                                                  ? locations[index]
+                                                  : search.locations[index])
+                                              .location
+                                              .split("")
+                                              .map((e) => TextSpan(
+                                                  text: e,
+                                                  style: TextStyle(
+                                                    color: search.word.contains(
+                                                            e.toLowerCase())
+                                                        ? ThemeModel.firstColor
+                                                        : null,
+                                                  )))
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                              Visibility(
+                                visible: !isAdd,
+                                child: Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18),
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    child: Center(
+                                      child: Text(
+                                        "+",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              fontSize: 32,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                      ),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
               });
         });
   }
