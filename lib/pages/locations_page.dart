@@ -20,15 +20,16 @@ class _LocationsPageState extends State<LocationsPage> {
 
   final List<ContinentType> continents = [
     ContinentType.all,
-    ContinentType.pacific,
-    ContinentType.atlantic,
-    ContinentType.indian,
     ContinentType.america,
     ContinentType.us,
     ContinentType.europe,
     ContinentType.asia,
     ContinentType.africa,
     ContinentType.australia,
+    ContinentType.pacific,
+    ContinentType.atlantic,
+    ContinentType.indian,
+    ContinentType.antarctica,
   ];
 
   @override
@@ -74,6 +75,7 @@ class _LocationsPageState extends State<LocationsPage> {
       "Pacific" => ContinentType.pacific,
       "Atlantic" => ContinentType.atlantic,
       "Indian" => ContinentType.indian,
+      "Antarctica" => ContinentType.antarctica,
       "America" => ContinentType.america,
       "US" => ContinentType.us,
       "Europe" => ContinentType.europe,
@@ -141,6 +143,10 @@ class _LocationsPageState extends State<LocationsPage> {
                               },
                               controller: controller,
                               cursorColor: Colors.black,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[a-zA-z\s]')),
+                              ],
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(
                                     bottom: 8, right: 40, left: 8),
@@ -263,10 +269,28 @@ class _LocationsPageState extends State<LocationsPage> {
                               margin: const EdgeInsets.only(right: 12),
                               height: 40,
                               width: 40,
-                              color: type.no == 0
-                                  ? Colors.red
-                                  : Colors.transparent,
-                              child: Icon(Icons.place_outlined),
+                              color: Colors.transparent,
+                              child: Stack(
+                                children: [
+                                  Center(child: Icon(Icons.place_outlined)),
+                                  Positioned(
+                                    right: 4,
+                                    top: 4,
+                                    child: Visibility(
+                                      visible: type.no != 0,
+                                      child: Container(
+                                        width: 8,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         }),
@@ -274,6 +298,7 @@ class _LocationsPageState extends State<LocationsPage> {
                 ),
               ),
             ),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
             ValueListenableBuilder<SearchModel>(
                 valueListenable: LocationService.search,
                 builder: (
@@ -288,27 +313,60 @@ class _LocationsPageState extends State<LocationsPage> {
                               : search.locations.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          child: RichText(
-                            text: TextSpan(
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
+                          color: Colors.amber.shade50,
+                          width: MediaQuery.of(context).size.width,
+                          height: 50,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ...((search.locations.isEmpty &&
+                                  Text(((search.locations.isEmpty &&
                                               controller.text.isEmpty)
                                           ? locations[index]
                                           : search.locations[index])
-                                      .location
-                                      .split("")
-                                      .map((e) => TextSpan(
-                                          text: e,
-                                          style: TextStyle(
-                                            color: search.word
-                                                    .contains(e.toLowerCase())
-                                                ? Colors.red
-                                                : null,
-                                          )))
-                                ]),
+                                      .continent
+                                      .name
+                                      .toString()),
+                                  RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                        children: [
+                                          ...((search.locations.isEmpty &&
+                                                      controller.text.isEmpty)
+                                                  ? locations[index]
+                                                  : search.locations[index])
+                                              .location
+                                              .split("")
+                                              .map((e) => TextSpan(
+                                                  text: e,
+                                                  style: TextStyle(
+                                                    color: search.word.contains(
+                                                            e.toLowerCase())
+                                                        ? Colors.red
+                                                        : null,
+                                                  )))
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.red,
+                                ),
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                margin: EdgeInsets.symmetric(vertical: 4),
+                                child: Icon(Icons.add),
+                              ),
+                            ],
                           ),
                         );
                       });

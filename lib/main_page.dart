@@ -30,15 +30,54 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Watime"),
+        centerTitle: false,
+        title: Text("WATIME"),
         actions: [
           GestureDetector(
-              onTap: () {
-                HapticFeedback.mediumImpact();
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const LocationsPage()));
-              },
-              child: Icon(Icons.add_box_outlined)),
+            onTap: () {
+              HapticFeedback.mediumImpact();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const LocationsPage()));
+            },
+            child: Container(
+              width: 48,
+              // color: Colors.red,
+              child: Icon(
+                Icons.view_list_rounded,
+                size: 34,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.mediumImpact();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const LocationsPage()));
+            },
+            child: Container(
+              width: 48,
+              child: Icon(
+                Icons.settings,
+                size: 32,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.mediumImpact();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const LocationsPage()));
+            },
+            child: Container(
+              width: 48,
+              // color: Colors.red,
+              child: Icon(
+                Icons.add_box_rounded,
+                size: 34,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
         ],
       ),
     );
