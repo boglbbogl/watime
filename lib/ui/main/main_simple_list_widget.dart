@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:watime/model/location_model.dart';
 import 'package:watime/services/main_service.dart';
 
-class MainListWidget extends StatelessWidget {
+class MainSimpleListWidget extends StatelessWidget {
   final List<LocationModel> locations;
   final DateTime standard;
-  const MainListWidget({
+  const MainSimpleListWidget({
     super.key,
     required this.locations,
     required this.standard,
@@ -17,11 +17,11 @@ class MainListWidget extends StatelessWidget {
         itemCount: locations.length,
         itemBuilder: (context, index) {
           return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: const Color.fromRGBO(245, 245, 245, 1),
+              color: Theme.of(context).colorScheme.onSecondary,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,51 +29,31 @@ class MainListWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
+                        Text(
+                          _hourAndMinute(index),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                fontSize: 48,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 4),
+                          padding: const EdgeInsets.only(left: 4, top: 14),
                           child: Text(
-                            _date(index),
+                            _second(index),
                             style: Theme.of(context)
                                 .textTheme
-                                .bodySmall!
+                                .bodyLarge!
                                 .copyWith(
-                                  fontSize: 12,
+                                  fontSize: 25,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              _hourAndMinute(index),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontSize: 36,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4, top: 14),
-                              child: Text(
-                                _second(index),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                      fontSize: 15,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        )
                       ],
                     ),
                   ],
@@ -83,6 +63,17 @@ class MainListWidget extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        Text(
+                          _date(index),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                fontSize: 12,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                        ),
+                        const SizedBox(height: 8),
                         Text(
                             MainService.getContinent(
                                     locations[index].continent.code)
@@ -94,6 +85,7 @@ class MainListWidget extends StatelessWidget {
                                   fontSize: 10,
                                   color: Theme.of(context).colorScheme.primary,
                                 )),
+                        const SizedBox(height: 12),
                         Text(locations[index].location,
                             style: Theme.of(context)
                                 .textTheme

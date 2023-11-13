@@ -64,7 +64,8 @@ class _MainPageState extends State<MainPage> {
               const SizedBox(width: 8),
             ],
           ),
-          MainWidget(),
+          const MainWidget(),
+          const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
       ),
     );

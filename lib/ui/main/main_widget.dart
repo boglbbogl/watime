@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:watime/model/main_model.dart';
 import 'package:watime/model/view_type.dart';
 import 'package:watime/services/main_service.dart';
-import 'package:watime/ui/main/main_grid_widget.dart';
-import 'package:watime/ui/main/main_list_widget.dart';
+import 'package:watime/ui/main/main_simple_grid_widget.dart';
+import 'package:watime/ui/main/main_simple_list_widget.dart';
 
 class MainWidget extends StatelessWidget {
   const MainWidget({
@@ -20,11 +20,11 @@ class MainWidget extends StatelessWidget {
           Widget? child,
         ) {
           return switch (main.view) {
-            ViewType.list => MainListWidget(
+            ViewType.grid => MainSimpleListWidget(
                 locations: main.locations,
                 standard: main.standard,
               ),
-            ViewType.grid => MainGridWidget(
+            ViewType.list => MainGridWidget(
                 locations: main.locations,
                 standard: main.standard,
               ),
