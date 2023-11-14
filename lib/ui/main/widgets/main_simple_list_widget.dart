@@ -107,9 +107,6 @@ class MainSimpleListWidget extends StatelessWidget {
         });
   }
 
-  String _date(int index) =>
-      standard.add(locations[index].timezone).toString().substring(0, 10);
-
   String _second(int index) =>
       standard.add(locations[index].timezone).toString().substring(17, 19);
 

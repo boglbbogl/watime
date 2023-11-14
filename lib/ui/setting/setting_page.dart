@@ -25,6 +25,7 @@ class _SettingPageState extends State<SettingPage> {
   final List<ViewType> views = [
     ViewType.list,
     ViewType.grid,
+    ViewType.page,
   ];
 
   final List<String> formatter = [
@@ -126,7 +127,7 @@ class _SettingPageState extends State<SettingPage> {
   Container _title(String text) {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 0),
-      height: 52,
+      height: 60,
       width: MediaQuery.of(context).size.width,
       color: Colors.transparent,
       child: Align(
@@ -135,7 +136,7 @@ class _SettingPageState extends State<SettingPage> {
           text,
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
-                fontSize: 18,
+                fontSize: 22,
               ),
         ),
       ),
@@ -148,6 +149,7 @@ class _SettingPageState extends State<SettingPage> {
       height: 170,
       color: Colors.transparent,
       child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -219,6 +221,39 @@ class _SettingPageState extends State<SettingPage> {
                                   ],
                                 ),
                               )
+                            ],
+                            if (views[index] == ViewType.page) ...[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ...List.generate(
+                                    3,
+                                    (ii) => Container(
+                                      margin: EdgeInsets.only(
+                                          right: ii == 0 ? 4 : 0,
+                                          left: ii == 2 ? 4 : 0),
+                                      height: ii == 1 ? 100 : 80,
+                                      width: ii != 1
+                                          ? 14
+                                          : (view == views[index] ? 76 : 80),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(
+                                                ii == 0 ? 0 : 4),
+                                            topRight: Radius.circular(
+                                                ii == 2 ? 0 : 4),
+                                            bottomLeft: Radius.circular(
+                                                ii == 0 ? 0 : 4),
+                                            bottomRight: Radius.circular(
+                                                ii == 2 ? 0 : 4)),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ],
                         ),

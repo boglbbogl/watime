@@ -24,6 +24,7 @@ class MainService {
       return switch (index) {
         0 => ViewType.list,
         1 => ViewType.grid,
+        2 => ViewType.page,
         _ => ViewType.list,
       };
     }
