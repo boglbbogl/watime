@@ -20,11 +20,13 @@ class MainWidget extends StatelessWidget {
           Widget? child,
         ) {
           return switch (main.view) {
-            ViewType.grid => MainSimpleListWidget(
+            ViewType.list => MainSimpleListWidget(
                 locations: main.locations,
                 standard: main.standard,
+                format: main.format,
               ),
-            ViewType.list => MainGridWidget(
+            ViewType.grid => MainGridWidget(
+                format: main.format,
                 locations: main.locations,
                 standard: main.standard,
               ),

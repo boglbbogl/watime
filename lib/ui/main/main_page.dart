@@ -7,6 +7,7 @@ import 'package:watime/services/main_service.dart';
 import 'package:watime/ui/locations/locations_page.dart';
 import 'package:watime/services/theme_service.dart';
 import 'package:watime/ui/main/main_widget.dart';
+import 'package:watime/ui/setting/setting_page.dart';
 
 class MainPage extends StatefulWidget {
   final Brightness brightness;
@@ -59,7 +60,7 @@ class _MainPageState extends State<MainPage> {
                 )),
             actions: [
               _action(icon: Icons.view_list_rounded, to: const LocationsPage()),
-              _action(icon: Icons.settings, to: const LocationsPage()),
+              _action(icon: Icons.settings, to: const SettingPage()),
               _action(icon: Icons.add_box_rounded, to: const LocationsPage()),
               const SizedBox(width: 8),
             ],

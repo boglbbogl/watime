@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:watime/model/location_model.dart';
 
 class MainGridWidget extends StatelessWidget {
   final List<LocationModel> locations;
+  final String format;
   final DateTime standard;
   const MainGridWidget({
     super.key,
     required this.locations,
+    required this.format,
     required this.standard,
   });
 
@@ -35,7 +38,7 @@ class MainGridWidget extends StatelessWidget {
                   child: Text(
                     locations[index].location,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 40,
+                          fontSize: 32,
                           color: Theme.of(context)
                               .colorScheme
                               .primary
@@ -57,7 +60,7 @@ class MainGridWidget extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(right: 4),
                             child: Text(
-                              _date(index),
+                              DateFormat(format).format(standard),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -73,7 +76,7 @@ class MainGridWidget extends StatelessWidget {
                           standard
                               .add(locations[index].timezone)
                               .toString()
-                              .substring(11, 19),
+                              .substring(11, 16),
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!

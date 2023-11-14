@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:watime/model/continent_type.dart';
 import 'package:watime/model/location_model.dart';
 import 'package:watime/model/main_model.dart';
+import 'package:watime/model/view_type.dart';
 import 'package:watime/repository/internal_repository.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -16,7 +17,21 @@ class MainService {
   static void syncTime(DateTime sync) =>
       main.value = main.value.copyWith(standard: sync);
 
+  static ViewType _viewType(int? index) {
+    if (index == null) {
+      return ViewType.list;
+    } else {
+      return switch (index) {
+        0 => ViewType.list,
+        1 => ViewType.grid,
+        _ => ViewType.list,
+      };
+    }
+  }
+
   static Future<void> init() async {
+    int? no = await InternalRepository.instance.getViewType();
+    main.value = main.value.copyWith(view: _viewType(no));
     tz.initializeTimeZones();
     List<String> codes = await InternalRepository.instance.getLocations();
     if (codes.isNotEmpty) {
@@ -38,6 +53,20 @@ class MainService {
         main.value = main.value.copyWith(locations: locations);
       }
     }
+    String? format = await InternalRepository.instance.getDateFormat();
+    if (format != null) {
+      main.value = main.value.copyWith(format: format);
+    }
+  }
+
+  static Future<void> onChangedFormat(String format) async {
+    await InternalRepository.instance.setDateFormat(format);
+    main.value = main.value.copyWith(format: format);
+  }
+
+  static Future<void> onChangedView(ViewType type) async {
+    await InternalRepository.instance.setViewType(type.no);
+    main.value = main.value.copyWith(view: type);
   }
 
   static Future<void> addLocation(LocationModel location) async {

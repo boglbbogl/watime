@@ -7,6 +7,28 @@ class InternalRepository {
   factory InternalRepository() => instance;
   InternalRepository._internal();
 
+  Future<int?> getViewType() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int? no = preferences.getInt(InternalKey.viewType);
+    return no;
+  }
+
+  Future<void> setViewType(int index) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setInt(InternalKey.viewType, index);
+  }
+
+  Future<String?> getDateFormat() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? format = preferences.getString(InternalKey.dateFormat);
+    return format;
+  }
+
+  Future<void> setDateFormat(String format) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setString(InternalKey.dateFormat, format);
+  }
+
   Future<List<String>> getLocations() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     List<String> codes = preferences.getStringList(InternalKey.locations) ?? [];

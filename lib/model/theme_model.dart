@@ -8,7 +8,7 @@ class ThemeModel {
       background: const Color.fromRGBO(255, 255, 255, 1),
       seedColor: const Color.fromRGBO(26, 26, 26, 1),
       primary: const Color.fromRGBO(26, 26, 26, 1),
-      onPrimary: const Color.fromRGBO(255, 255, 255, 1),
+      onPrimary: const Color.fromRGBO(116, 116, 116, 1),
       error: Colors.red,
       secondary: const Color.fromRGBO(195, 195, 195, 1),
       onSecondary: const Color.fromRGBO(215, 215, 215, 1),
@@ -19,6 +19,9 @@ class ThemeModel {
       titleTextStyle: textTheme.bodyLarge!.copyWith(
         fontSize: 26,
         color: const Color.fromRGBO(26, 26, 26, 1),
+      ),
+      iconTheme: const IconThemeData(
+        color: Color.fromRGBO(26, 26, 26, 1),
       ),
       actionsIconTheme: const IconThemeData(
         color: Color.fromRGBO(26, 26, 26, 1),
@@ -32,7 +35,7 @@ class ThemeModel {
       background: const Color.fromRGBO(26, 26, 26, 1),
       seedColor: const Color.fromRGBO(255, 255, 255, 1),
       primary: const Color.fromRGBO(255, 255, 255, 1),
-      onPrimary: const Color.fromRGBO(26, 26, 26, 1),
+      onPrimary: const Color.fromRGBO(165, 165, 165, 1),
       error: Colors.red,
       secondary: const Color.fromRGBO(95, 95, 95, 1),
       onSecondary: const Color.fromRGBO(66, 66, 66, 1),
@@ -43,6 +46,9 @@ class ThemeModel {
       titleTextStyle: textTheme.bodyLarge!.copyWith(
         fontSize: 26,
         color: const Color.fromRGBO(255, 255, 255, 1),
+      ),
+      iconTheme: const IconThemeData(
+        color: Color.fromRGBO(255, 255, 255, 1),
       ),
       actionsIconTheme: const IconThemeData(
         color: Color.fromRGBO(255, 255, 255, 1),
