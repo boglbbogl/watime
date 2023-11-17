@@ -29,24 +29,31 @@ class _MainSimpleAnalogueWidgetState extends State<MainSimpleAnalogueWidget> {
           const SizedBox(height: 24),
           Container(
             color: Colors.blue,
-            child: CustomPaint(
-              size: Size(
-                MediaQuery.of(context).size.width * 0.8,
-                MediaQuery.of(context).size.width * 0.8,
+            child: Transform.rotate(
+              angle: -pi / 2,
+              child: CustomPaint(
+                size: Size(
+                  MediaQuery.of(context).size.width * 0.8,
+                  MediaQuery.of(context).size.width * 0.8,
+                ),
+                painter: ClockPainter(
+                    // clocks: clocks,
+                    ),
               ),
-              painter: ClockPainter(
-                  // clocks: clocks,
-                  ),
             ),
           ),
           Container(
             color: Colors.red,
-            child: CustomPaint(
-              size: Size(
-                MediaQuery.of(context).size.width * 0.8,
-                MediaQuery.of(context).size.width * 0.8,
+            child: Transform.rotate(
+              angle: -pi / 2,
+              // angle: 0,
+              child: CustomPaint(
+                size: Size(
+                  MediaQuery.of(context).size.width * 0.8,
+                  MediaQuery.of(context).size.width * 0.8,
+                ),
+                painter: _Clock(),
               ),
-              painter: _Clock(),
             ),
           ),
         ],
@@ -150,6 +157,8 @@ class _Clock extends CustomPainter {
     final double center = size.width / 2;
     final Offset offset = Offset(center, center);
 
+    paint = Paint()..color = Colors.green;
+
     canvas.drawCircle(offset, center, paint);
     paint = Paint()..color = Colors.yellow;
     canvas.drawCircle(offset, center - 30, paint);
@@ -157,13 +166,37 @@ class _Clock extends CustomPainter {
     canvas.drawCircle(offset, center - center - 20, paint);
 
     double hourX = center +
-        60 * cos((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
+        60 *
+            cos((dateTime.hour * (center * 0.3) + dateTime.minute * 0.5) *
+                pi /
+                180);
     double hourY = center +
-        60 * sin((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
+        60 *
+            sin((dateTime.hour * (center * 0.3) + dateTime.minute * 0.5) *
+                pi /
+                180);
+    double minX = center + (center * 0.5) * cos(dateTime.minute * 6 * pi / 180);
+    double minY = center + (center * 0.5) * sin(dateTime.minute * 6 * pi / 180);
+
+    double secX =
+        center + (center * 0.55) * cos(dateTime.second * 6 * pi / 180);
+    double secY =
+        center + (center * 0.55) * sin(dateTime.second * 6 * pi / 180);
+
     paint = Paint()
       ..color = Colors.cyan
       ..strokeWidth = 12;
     canvas.drawLine(offset, Offset(hourX, hourY), paint);
+
+    paint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 12;
+    canvas.drawLine(offset, Offset(minX, minY), paint);
+
+    paint = Paint()
+      ..color = Colors.pink
+      ..strokeWidth = 12;
+    canvas.drawLine(offset, Offset(secX, secY), paint);
   }
 
   @override
