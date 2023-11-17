@@ -55,7 +55,6 @@ class MainGridWidget extends StatelessWidget {
                     right: 4,
                     child: Container(
                       color: Colors.transparent,
-                      // width: 130,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

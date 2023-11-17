@@ -21,28 +21,32 @@ class MainWidget extends StatelessWidget {
           MainModel main,
           Widget? child,
         ) {
-          return switch (main.view) {
-            ViewType.list => MainSimpleListWidget(
-                locations: main.locations,
-                standard: main.standard,
-                format: main.format,
-              ),
-            ViewType.grid => MainGridWidget(
-                format: main.format,
-                locations: main.locations,
-                standard: main.standard,
-              ),
-            ViewType.page => MainSimplePageWidget(
-                format: main.format,
-                locations: main.locations,
-                standard: main.standard,
-              ),
-            ViewType.analogue => MainSimpleAnalogueWidget(
-                format: main.format,
-                locations: main.locations,
-                standard: main.standard,
-              ),
-          };
+          if (main.locations.isNotEmpty) {
+            return switch (main.view) {
+              ViewType.list => MainSimpleListWidget(
+                  locations: main.locations,
+                  standard: main.standard,
+                  format: main.format,
+                ),
+              ViewType.grid => MainGridWidget(
+                  format: main.format,
+                  locations: main.locations,
+                  standard: main.standard,
+                ),
+              ViewType.page => MainSimplePageWidget(
+                  format: main.format,
+                  locations: main.locations,
+                  standard: main.standard,
+                ),
+              ViewType.analogue => MainSimpleAnalogueWidget(
+                  format: main.format,
+                  locations: main.locations,
+                  standard: main.standard,
+                ),
+            };
+          } else {
+            return const SliverToBoxAdapter();
+          }
         });
   }
 }

@@ -24,9 +24,9 @@ class _SettingPageState extends State<SettingPage> {
 
   final List<ViewType> views = [
     ViewType.analogue,
-    ViewType.list,
-    ViewType.grid,
     ViewType.page,
+    ViewType.grid,
+    ViewType.list,
   ];
 
   final List<String> formatter = [
@@ -164,8 +164,8 @@ class _SettingPageState extends State<SettingPage> {
                       },
                       child: Container(
                         margin: const EdgeInsets.only(right: 12, top: 5),
-                        height: view == views[index] ? 160 : 156,
-                        width: view == views[index] ? 120 : 116,
+                        height: view == views[index] ? 160 : 160,
+                        width: view == views[index] ? 120 : 120,
                         decoration: BoxDecoration(
                           border: view == views[index]
                               ? Border.all(
@@ -231,12 +231,11 @@ class _SettingPageState extends State<SettingPage> {
                                     3,
                                     (ii) => Container(
                                       margin: EdgeInsets.only(
-                                          right: ii == 0 ? 4 : 0,
-                                          left: ii == 2 ? 4 : 0),
+                                        right: ii == 0 ? 4 : 0,
+                                        left: ii == 2 ? 4 : 0,
+                                      ),
                                       height: ii == 1 ? 100 : 80,
-                                      width: ii != 1
-                                          ? 14
-                                          : (view == views[index] ? 76 : 80),
+                                      width: ii != 1 ? 14 : 76,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(
