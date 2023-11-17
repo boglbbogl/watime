@@ -23,6 +23,7 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   final List<ViewType> views = [
+    ViewType.analogue,
     ViewType.list,
     ViewType.grid,
     ViewType.page,
@@ -253,6 +254,53 @@ class _SettingPageState extends State<SettingPage> {
                                     ),
                                   ),
                                 ],
+                              ),
+                            ],
+                            if (views[index] == ViewType.analogue) ...[
+                              Container(
+                                width: 90,
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      left: 45,
+                                      top: 50,
+                                      child: Container(
+                                        transform: Matrix4.rotationZ(10.1),
+                                        width: 5,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(35),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 47,
+                                      top: 47,
+                                      child: Container(
+                                        transform: Matrix4.rotationZ(8.7),
+                                        width: 5,
+                                        height: 25,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(35),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ],

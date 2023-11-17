@@ -25,6 +25,7 @@ class MainService {
         0 => ViewType.list,
         1 => ViewType.grid,
         2 => ViewType.page,
+        3 => ViewType.analogue,
         _ => ViewType.list,
       };
     }

@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:watime/model/main_model.dart';
 import 'package:watime/services/main_service.dart';
-
 import 'package:watime/ui/locations/locations_page.dart';
 import 'package:watime/services/theme_service.dart';
 import 'package:watime/ui/main/widgets/main_widget.dart';
@@ -117,7 +115,6 @@ class _MainPageState extends State<MainPage> {
                         ),
                         Container(
                           color: Colors.transparent,
-                          width: 55,
                           child: Text(
                             main.standard.toString().substring(11, 19),
                             style:
