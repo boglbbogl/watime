@@ -116,25 +116,6 @@ class MainSimpleAnalogueWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              bottom: MediaQuery.of(context).padding.bottom,
-              child: GestureDetector(
-                onTap: () {},
-                onPanUpdate: (DragUpdateDetails details) {},
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 60,
-                  color: Colors.transparent,
-                  child: Transform.rotate(
-                      angle: pi / 2,
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        size: 40,
-                        color: Theme.of(context).colorScheme.secondary,
-                      )),
-                ),
-              ),
-            ),
           ],
         ),
       ),

@@ -29,6 +29,11 @@ class InternalRepository {
     await preferences.setString(InternalKey.dateFormat, format);
   }
 
+  Future<void> changedLocations(List<String> codes) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setStringList(InternalKey.locations, codes);
+  }
+
   Future<List<String>> getLocations() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     List<String> codes = preferences.getStringList(InternalKey.locations) ?? [];

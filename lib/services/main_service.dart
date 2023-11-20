@@ -78,6 +78,34 @@ class MainService {
     await InternalRepository.instance.setLocation(location.code);
   }
 
+  static Future<void> _syncLocations() async {
+    List<String> codes = [];
+    for (final location in main.value.locations) {
+      codes = List.from(codes)..add(location.code);
+    }
+    await InternalRepository.instance.changedLocations(codes);
+  }
+
+  static Future<void> onReorder(int previous, int current) async {
+    if (previous < current) {
+      current -= 1;
+    }
+    List<LocationModel> locations = main.value.locations;
+    LocationModel location = main.value.locations[previous];
+    locations = List.from(locations)
+      ..removeAt(previous)
+      ..insert(current, location);
+    main.value = main.value.copyWith(locations: locations);
+    await _syncLocations();
+  }
+
+  static Future<void> onRemove(int index) async {
+    List<LocationModel> locations = main.value.locations;
+    locations = List.from(locations)..removeAt(index);
+    main.value = main.value.copyWith(locations: locations);
+    await _syncLocations();
+  }
+
   static ContinentType getContinent(String code) {
     return switch (code) {
       "Pacific" => ContinentType.pacific,

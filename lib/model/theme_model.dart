@@ -15,6 +15,7 @@ class ThemeModel {
     ),
     scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
     appBarTheme: AppBarTheme(
+      scrolledUnderElevation: 0,
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       titleTextStyle: textTheme.bodyLarge!.copyWith(
         fontSize: 26,
@@ -42,6 +43,7 @@ class ThemeModel {
     ),
     scaffoldBackgroundColor: const Color.fromRGBO(26, 26, 26, 1),
     appBarTheme: AppBarTheme(
+      scrolledUnderElevation: 0,
       backgroundColor: const Color.fromRGBO(26, 26, 26, 1),
       titleTextStyle: textTheme.bodyLarge!.copyWith(
         fontSize: 26,

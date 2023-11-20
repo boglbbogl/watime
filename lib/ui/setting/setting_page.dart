@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:watime/model/view_type.dart';
 import 'package:watime/services/main_service.dart';
+import 'package:watime/services/theme_service.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -13,14 +14,21 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   String format = "EEE, MMM dd";
-  ViewType view = ViewType.list;
+  ViewType view = ViewType.analogue;
+  ThemeMode theme = ThemeMode.system;
 
   @override
   void initState() {
     super.initState();
     format = MainService.main.value.format;
     view = MainService.main.value.view;
+    theme = ThemeService.mode.value;
   }
+
+  final List<ThemeMode> themes = [
+    ThemeMode.dark,
+    ThemeMode.light,
+  ];
 
   final List<ViewType> views = [
     ViewType.analogue,
@@ -41,6 +49,13 @@ class _SettingPageState extends State<SettingPage> {
     "yyyy/MM/dd",
     "yyyy-MM-dd",
   ];
+
+  Future<void> onChangedTheme(ThemeMode mode) async {
+    await ThemeService.onChanged(mode);
+    setState(() {
+      theme = mode;
+    });
+  }
 
   Future<void> onChangedFormat(String change) async {
     await MainService.onChangedFormat(change);
@@ -65,13 +80,66 @@ class _SettingPageState extends State<SettingPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            _title("Mode"),
+            _modeFormats(),
             _title("View"),
             _views(),
             _title("Date Format"),
             _dateFormats(),
+            Container(
+              height: 1000,
+              width: 10,
+            )
           ],
         ),
       ),
+    );
+  }
+
+  Column _modeFormats() {
+    return Column(
+      children: [
+        ...List.generate(
+            themes.length,
+            (index) => GestureDetector(
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    onChangedTheme(themes[index]);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 24, bottom: 8),
+                    height: 40,
+                    width: MediaQuery.of(context).size.width - 40,
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        Icon(
+                          themes[index] == theme
+                              ? Icons.circle_rounded
+                              : Icons.circle_outlined,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 12,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          index == 0 ? "Dark" : "Light",
+                          style: themes[index] == theme
+                              ? Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 18)
+                              : Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
+                ))
+      ],
     );
   }
 
