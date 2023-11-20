@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:watime/model/location_model.dart';
 import 'package:watime/services/main_service.dart';
 
 class MainSimpleListWidget extends StatelessWidget {
   final List<LocationModel> locations;
   final DateTime standard;
+  final String format;
   const MainSimpleListWidget({
     super.key,
     required this.locations,
     required this.standard,
+    required this.format,
   });
 
   @override
@@ -64,7 +67,7 @@ class MainSimpleListWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          _date(index),
+                          DateFormat(format).format(standard),
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -103,9 +106,6 @@ class MainSimpleListWidget extends StatelessWidget {
           );
         });
   }
-
-  String _date(int index) =>
-      standard.add(locations[index].timezone).toString().substring(0, 10);
 
   String _second(int index) =>
       standard.add(locations[index].timezone).toString().substring(17, 19);

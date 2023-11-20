@@ -21,14 +21,8 @@ class ThemeService {
     }
   }
 
-  static Future<void> onChanged() async {
-    ThemeMode change;
-    if (mode.value == ThemeMode.light) {
-      change = ThemeMode.dark;
-    } else {
-      change = ThemeMode.light;
-    }
-    await InternalRepository.instance.setThemeMode(change);
-    mode.value = change;
+  static Future<void> onChanged(ThemeMode changedMode) async {
+    await InternalRepository.instance.setThemeMode(changedMode);
+    mode.value = changedMode;
   }
 }
