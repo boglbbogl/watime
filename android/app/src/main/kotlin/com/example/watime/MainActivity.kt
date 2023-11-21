@@ -1,4 +1,4 @@
-package com.example.watime
+package com.tyger.watime
 
 import io.flutter.embedding.android.FlutterActivity
 
